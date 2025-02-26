@@ -4,6 +4,7 @@ from Visualization import *
 import pandas as pd
 
 # load in all the files with the data I am using. This takes a long time.
+# NOTE: Change these for running on a different computer!!! 
 # file2022DF = pd.read_excel("D:\Coding\Equibase\FirstAssignment\data\\2022.xlsx", header=0)
 # file2023DF = pd.read_excel("D:\Coding\Equibase\FirstAssignment\data\\2023.xlsx", header=0)
 file2024DF = pd.read_excel("D:\Coding\Equibase\FirstAssignment\data\\2024.xlsx", header=0)
