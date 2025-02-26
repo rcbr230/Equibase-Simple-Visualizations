@@ -31,6 +31,7 @@ def AvgMorningLineOdds(df:pd.DataFrame):
         trackVals[key] = trackVals[key] / numRecords
 
     # Use matplotlib to graph out the data on a bar graph
+    plt.clf()
     plt.bar(trackVals.keys(), trackVals.values())
     plt.xlabel('Tracks')
     plt.ylabel('Favorite Morining Line Odds')
@@ -54,26 +55,58 @@ def AvgSpeedAndRating(df2022:pd.DataFrame, df2023:pd.DataFrame, df2024:pd.DataFr
     #  GRAPH 2: x is years, y is class ratings
 
     # Load all data into 1 DF
-    dfMerged = pd.concat([df2022, df2023, df2024])
-    dfMerged.reset_index()
-
-    # seperate into NY and KY
-    dfKY = (dfMerged['state'] == 'KY')
-    dfNY = (dfMerged['state'] == 'NY')
 
     # calc averages of speed figures
-    kySpeedFigure = 0
-    nySpeedFigure = 0
-    for i in range(len(dfKY)):
-        kySpeedFigure += dfKY['speed_figure'][i]
-    kySpeedFigure = kySpeedFigure/len(dfKY)
-
-    for i in range(len(dfNY)):
-        nySpeedFigure += dfNY['speed_figure'][i]
-    nySpeedFigure = nySpeedFigure/len(dfKY)
+    kySpeedFigure = [0,0,0]
+    kyRaces = [0,0,0]
+    nySpeedFigure = [0,0,0]
+    nyRaces = [0,0,0]
 
 
-    
+    for i in range(max(max(len(df2022), len(df2023)), len(df2024))):
+        if i < len(df2022):
+            if str(df2022['state'][i]).strip().upper() == 'KY':
+                kySpeedFigure[0] += df2022['speed_figure'][i]
+                kyRaces[0] += 1
+            elif str(df2022['state'][i]).strip().upper() == 'NY':
+                nySpeedFigure[0] += df2022['speed_figure'][i]
+                nyRaces[0] += 1
+
+        if i < len(df2023):
+            if str(df2023['state'][i]).strip().upper() == 'KY':
+                kySpeedFigure[1] += df2023['speed_figure'][i]
+                kyRaces[1] += 1
+            elif str(df2023['state'][i]).strip().upper() == 'NY':
+                nySpeedFigure[1] += df2023['speed_figure'][i]
+                nyRaces[1] += 1
+
+        if i < len(df2024):
+            if str(df2024['state'][i]).strip().upper() == 'KY':
+                kySpeedFigure[2] += df2024['speed_figure'][i]
+                kyRaces[2] += 1
+            elif str(df2024['state'][i]).strip().upper() == 'NY':
+                nySpeedFigure[2] += df2024['speed_figure'][i]
+                nyRaces[2] += 1
+
+
+    kySpeedFigure = [kySpeedFigure[0]/kyRaces[0], kySpeedFigure[1]/kyRaces[1], kySpeedFigure[2]/kyRaces[2]]
+    nySpeedFigure = [nySpeedFigure[0]/nyRaces[0], nySpeedFigure[1]/nyRaces[1], nySpeedFigure[2]/nyRaces[2]]
+
+    x = [2022, 2023, 2024]
+    plt.clf()
+    plt.plot(x, kySpeedFigure, label="Kentucky")
+    plt.plot(x, nySpeedFigure, label="New York")
+    plt.xticks([2022, 2023, 2024])
+    plt.tight_layout()
+    plt.xlabel('Year')
+    plt.ylabel('Avg Speed Figure')
+    plt.title('Average Speed figure by year')
+
+    plt.legend()
+
+    plt.show()
+
+
 
 
 
@@ -99,6 +132,7 @@ def PostTimeOdds_RaceType(df:pd.DataFrame):
         posttimeoddsVals[key] = posttimeoddsVals[key] / numRecords
 
     # Use matplotlib to graph out the data on a bar graph
+    plt.clf()
     plt.bar(posttimeoddsVals.keys(), posttimeoddsVals.values())
     plt.xlabel('Race Type')
     plt.ylabel('Post Time Odds')
