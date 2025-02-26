@@ -52,8 +52,28 @@ def AvgSpeedAndRating(df2022:pd.DataFrame, df2023:pd.DataFrame, df2024:pd.DataFr
     # use a line graph with 2 seperate lines for each state. 
     #  GRAPH 1: x is years, y is speed figure
     #  GRAPH 2: x is years, y is class ratings
-    pass
 
+    # Load all data into 1 DF
+    dfMerged = pd.concat([df2022, df2023, df2024])
+    dfMerged.reset_index()
+
+    # seperate into NY and KY
+    dfKY = (dfMerged['state'] == 'KY')
+    dfNY = (dfMerged['state'] == 'NY')
+
+    # calc averages of speed figures
+    kySpeedFigure = 0
+    nySpeedFigure = 0
+    for i in range(len(dfKY)):
+        kySpeedFigure += dfKY['speed_figure'][i]
+    kySpeedFigure = kySpeedFigure/len(dfKY)
+
+    for i in range(len(dfNY)):
+        nySpeedFigure += dfNY['speed_figure'][i]
+    nySpeedFigure = nySpeedFigure/len(dfKY)
+
+
+    
 
 
 
