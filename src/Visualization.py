@@ -4,6 +4,8 @@ from fractions import Fraction
 import matplotlib.pyplot as plt
 
 
+
+
 """
 Assign 1
 Create a visual that would show us the average morning line odds
@@ -35,6 +37,9 @@ def AvgMorningLineOdds(df:pd.DataFrame):
     plt.title('Average Morning Line Odds by favorites per track 2024')
     plt.show()
 
+
+
+
 """
 Assign 2
 Create a visual with the legend being the two states (NY and KY)
@@ -48,6 +53,9 @@ def AvgSpeedAndRating(df2022:pd.DataFrame, df2023:pd.DataFrame, df2024:pd.DataFr
     #  GRAPH 1: x is years, y is speed figure
     #  GRAPH 2: x is years, y is class ratings
     pass
+
+
+
 
 
 """
