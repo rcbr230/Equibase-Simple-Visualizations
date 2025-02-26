@@ -64,6 +64,23 @@ We are interested in also looking at posttimeodds for year 2024
 by race_type. Can you create a visual that would present the avg posttimeodds for 
 each race type?
 """
-def PostTimeOdds_RaceType(file):
+def PostTimeOdds_RaceType(df:pd.DataFrame):
     # bar graph. x is race type, y is posttimeodds
-    pass
+    # only select favoirtes
+
+    # load all track vals 
+    posttimeoddsVals = defaultdict(float)
+    for i in range(len(df)):
+        posttimeoddsVals[df['race_type'][i]] += float(df['Posttimeodds'][i])
+    
+    # find averages by counting # of appearances track id in DF
+    for key, val in posttimeoddsVals.items():
+        numRecords = (df['race_type'] == key).sum()
+        posttimeoddsVals[key] = posttimeoddsVals[key] / numRecords
+
+    # Use matplotlib to graph out the data on a bar graph
+    plt.bar(posttimeoddsVals.keys(), posttimeoddsVals.values())
+    plt.xlabel('Race Type')
+    plt.ylabel('Post Time Odds')
+    plt.title('Average Post Time Odds value by Race Type 2024')
+    plt.show()
