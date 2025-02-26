@@ -151,3 +151,22 @@ def PostTimeOdds_RaceType(df:pd.DataFrame):
     plt.title('Average Post Time Odds value by Race Type 2024')
     plt.tight_layout()
     plt.show()
+
+"""
+Output the trainer_id with the highest # of wins (first place)
+"""
+def MostWinsTrainer(df:pd.DataFrame):
+    # store all trainers with winning horses in a dict
+
+    # Create dict and mod the dataframe to only contain wins
+    trainers = defaultdict(int)
+    df = df.loc[df['official_position'] == 1]
+    df = df.reset_index()
+
+    # Inc trainer per win found
+    for i in range(len(df)):
+        trainers[str(df['trainer_id'][i])] += 1
+
+    # output the trainer with the highest number of wins and how many wins
+    highestTrainer = max(trainers, key=trainers.get)
+    print(f'{highestTrainer} has {trainers[highestTrainer]} wins! wow!')
