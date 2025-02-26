@@ -36,6 +36,7 @@ def AvgMorningLineOdds(df:pd.DataFrame):
     plt.xlabel('Tracks')
     plt.ylabel('Favorite Morining Line Odds')
     plt.title('Average Morning Line Odds by favorites per track 2024')
+    plt.tight_layout()
     plt.show()
 
 
@@ -114,7 +115,7 @@ def AvgSpeedAndRating(df2022:pd.DataFrame, df2023:pd.DataFrame, df2024:pd.DataFr
 
 
     plt.legend()
-
+    plt.tight_layout()
     plt.show()
 
 
@@ -148,4 +149,5 @@ def PostTimeOdds_RaceType(df:pd.DataFrame):
     plt.xlabel('Race Type')
     plt.ylabel('Post Time Odds')
     plt.title('Average Post Time Odds value by Race Type 2024')
+    plt.tight_layout()
     plt.show()
