@@ -10,6 +10,6 @@ file2023DF = pd.read_excel("D:\Coding\Equibase\FirstAssignment\data\\2023.xlsx",
 file2024DF = pd.read_excel("D:\Coding\Equibase\FirstAssignment\data\\2024.xlsx", header=0)
 
 
-# AvgMorningLineOdds(file2024DF)
+AvgMorningLineOdds(file2024DF)
 AvgSpeedAndRating(file2022DF, file2023DF, file2024DF)
-# PostTimeOdds_RaceType(file2024DF)
+PostTimeOdds_RaceType(file2024DF)
