@@ -49,7 +49,7 @@ at any trends that are occurring over the years. Is the avg speed_figure
 or avg class_ratings for NY tracks or KY steady over the years? Or has there 
 been any increases/decreases? Which state tends to have higher average speed figures?
 """
-def AvgSpeedAndRating(df2022:pd.DataFrame, df2023:pd.DataFrame, df2024:pd.DataFrame):
+def AvgSpeedAndRating(df2022:pd.DataFrame, df2023:pd.DataFrame, df2024:pd.DataFrame, yAxis:str):
     # use a line graph with 2 seperate lines for each state. 
     #  GRAPH 1: x is years, y is speed figure
     #  GRAPH 2: x is years, y is class ratings
@@ -66,41 +66,52 @@ def AvgSpeedAndRating(df2022:pd.DataFrame, df2023:pd.DataFrame, df2024:pd.DataFr
     for i in range(max(max(len(df2022), len(df2023)), len(df2024))):
         if i < len(df2022):
             if str(df2022['state'][i]).strip().upper() == 'KY':
-                kySpeedFigure[0] += df2022['speed_figure'][i]
+                kySpeedFigure[0] += df2022[yAxis][i]
                 kyRaces[0] += 1
             elif str(df2022['state'][i]).strip().upper() == 'NY':
-                nySpeedFigure[0] += df2022['speed_figure'][i]
+                nySpeedFigure[0] += df2022[yAxis][i]
                 nyRaces[0] += 1
 
         if i < len(df2023):
             if str(df2023['state'][i]).strip().upper() == 'KY':
-                kySpeedFigure[1] += df2023['speed_figure'][i]
+                kySpeedFigure[1] += df2023[yAxis][i]
                 kyRaces[1] += 1
             elif str(df2023['state'][i]).strip().upper() == 'NY':
-                nySpeedFigure[1] += df2023['speed_figure'][i]
+                nySpeedFigure[1] += df2023[yAxis][i]
                 nyRaces[1] += 1
 
         if i < len(df2024):
             if str(df2024['state'][i]).strip().upper() == 'KY':
-                kySpeedFigure[2] += df2024['speed_figure'][i]
+                kySpeedFigure[2] += df2024[yAxis][i]
                 kyRaces[2] += 1
             elif str(df2024['state'][i]).strip().upper() == 'NY':
-                nySpeedFigure[2] += df2024['speed_figure'][i]
+                nySpeedFigure[2] += df2024[yAxis][i]
                 nyRaces[2] += 1
 
 
     kySpeedFigure = [kySpeedFigure[0]/kyRaces[0], kySpeedFigure[1]/kyRaces[1], kySpeedFigure[2]/kyRaces[2]]
     nySpeedFigure = [nySpeedFigure[0]/nyRaces[0], nySpeedFigure[1]/nyRaces[1], nySpeedFigure[2]/nyRaces[2]]
 
+    # plot out graph
     x = [2022, 2023, 2024]
     plt.clf()
     plt.plot(x, kySpeedFigure, label="Kentucky")
     plt.plot(x, nySpeedFigure, label="New York")
+
     plt.xticks([2022, 2023, 2024])
     plt.tight_layout()
     plt.xlabel('Year')
-    plt.ylabel('Avg Speed Figure')
-    plt.title('Average Speed figure by year')
+    # change based on if user is requesting speed figure or class rating avgs
+    if yAxis == 'speed_figure':
+        plt.ylabel('Avg Speed Figure')
+        plt.title('Average Speed Figure by Year')
+        plt.ylim([70, 80])
+
+    else:
+        plt.ylabel('Avg Class Rating')
+        plt.title('Average Class Rating by Year')
+        plt.ylim([80, 90])
+
 
     plt.legend()
 
