@@ -1,3 +1,13 @@
+"""
+Visualization.py
+
+Author: Reece Brogden
+Date: 2/25/2025
+Purpose: Generate graphs from Equibase data based on the specifications above each function
+
+"""
+
+
 import pandas as pd
 import matplotlib.pyplot as plt
 from collections import defaultdict
@@ -63,7 +73,8 @@ def AvgSpeedAndRating(df2022:pd.DataFrame, df2023:pd.DataFrame, df2024:pd.DataFr
     nySpeedFigure = [0,0,0]
     nyRaces = [0,0,0]
 
-
+    # there is a better way to do this using Pandas, but it won't change speed(maybe a bit? This is fast compared to loading data...). Just make it look a lot nicer, 
+    #   and I already wrote this before I realized the other solution.
     for i in range(max(max(len(df2022), len(df2023)), len(df2024))):
         if i < len(df2022):
             if str(df2022['state'][i]).strip().upper() == 'KY':
@@ -88,7 +99,6 @@ def AvgSpeedAndRating(df2022:pd.DataFrame, df2023:pd.DataFrame, df2024:pd.DataFr
             elif str(df2024['state'][i]).strip().upper() == 'NY':
                 nySpeedFigure[2] += df2024[yAxis][i]
                 nyRaces[2] += 1
-
 
     kySpeedFigure = [kySpeedFigure[0]/kyRaces[0], kySpeedFigure[1]/kyRaces[1], kySpeedFigure[2]/kyRaces[2]]
     nySpeedFigure = [nySpeedFigure[0]/nyRaces[0], nySpeedFigure[1]/nyRaces[1], nySpeedFigure[2]/nyRaces[2]]
@@ -133,12 +143,12 @@ def PostTimeOdds_RaceType(df:pd.DataFrame):
     # bar graph. x is race type, y is posttimeodds
     # only select favoirtes
 
-    # load all track vals 
+    # load all race types
     posttimeoddsVals = defaultdict(float)
     for i in range(len(df)):
         posttimeoddsVals[df['race_type'][i]] += float(df['Posttimeodds'][i])
     
-    # find averages by counting # of appearances track id in DF
+    # find averages by counting # of appearances race type in DF
     for key, val in posttimeoddsVals.items():
         numRecords = (df['race_type'] == key).sum()
         posttimeoddsVals[key] = posttimeoddsVals[key] / numRecords
