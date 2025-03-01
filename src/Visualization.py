@@ -163,20 +163,36 @@ def PostTimeOdds_RaceType(df:pd.DataFrame):
     plt.show()
 
 """
-Output the trainer_id with the highest # of wins (first place)
+Output a graph of the ratio wins/horses trained of all trainers in the data. 
+ NOTE: Only trainers with 10+ trained horses
 """
 def MostWinsTrainer(df:pd.DataFrame):
-    # store all trainers with winning horses in a dict
 
-    # Create dict and mod the dataframe to only contain wins
+    # Create dict and mod the dataframe to only contain wins/runs
     trainers = defaultdict(int)
-    df = df.loc[df['official_position'] == 1]
-    df = df.reset_index()
 
-    # Inc trainer per win found
+    # Inc first_trainer when a win is found, always inc when you hit a trainer
     for i in range(len(df)):
+        pos = df['official_position'][i]
+        if  pos == 1 or pos == 2 or pos == 3:
+            trainers["first_"+str(df['trainer_id'][i])] += 1
         trainers[str(df['trainer_id'][i])] += 1
+        
+    # Create the ratio for the y-axis
+    ratio = {}
+    uniqueTrainers = df['trainer_id'].unique()
 
-    # output the trainer with the highest number of wins and how many wins
-    highestTrainer = max(trainers, key=trainers.get)
-    print(f'{highestTrainer} has {trainers[highestTrainer]} wins! wow!')
+    # go through each unique trainer where they have >= 10 horses, and record their ratio
+    for trainer in uniqueTrainers:
+        if trainers[str(trainer)] < 10:
+            continue
+        ratio[str(trainer)] = trainers["first_"+str(trainer)] / trainers[str(trainer)]
+
+    # plot data
+    plt.clf()
+    plt.bar(ratio.keys(), ratio.values())
+    plt.xlabel('Trainer ID')
+    plt.ylabel('# horses win-place-show / horses trained')
+    plt.title('Ratio of horses that have win-place-show/the number of horses trained by a trainer')
+    plt.tight_layout()
+    plt.show()
